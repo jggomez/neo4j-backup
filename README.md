@@ -27,6 +27,7 @@ Neo4j utility python program for backing up neo4j databases during the online pe
  - [ ] Download the python program on your server and install dependencies with the following command 
  
 		pip3 install google-cloud-storage
+		pip3 install google-cloud
         
         
  - [ ] Install cron package for linux with the following commands
