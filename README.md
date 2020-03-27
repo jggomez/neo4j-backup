@@ -10,19 +10,19 @@ Neo4j utility python program for backing up neo4j databases during the online pe
 
 - [ ] Create the environment variables permanently, and system wide (all users, all processes) add set variable in /etc/environment
  
-        sudo -H vi /etc/environment
+        sudo vi /etc/profile.d/backup_neo4j.sh
 
  - [ ] Add a named environment variable to the /etc/environment file, with name URL_BACKUP then its value is the path of the disk where you want to save the backup.
  
-        URL_BACKUP="/home/juan/backups/"
+        export URL_BACKUP=/home/juan/backups/
             
  - [ ] Add a named environment variable to the /etc/environment file, with name BUCKET_NAME then its value is the name of storage in GCP.
  
-        BUCKET_NAME="backups-wordbox"
+        export BUCKET_NAME=backups-wordbox
          
  - [ ] Add a named environment variable to the /etc/environment file, with name ENVIRONMENT_VARIABLE_VALUE_GCP then its value is the path of GCP credentials.
  
-        URL_GCP_CREDENTIALS="/home/juan/Backend-Backups-Utility-Neo4j/src/resources/wordboxdev-credentials-storage.json"
+        export URL_GCP_CREDENTIALS=/home/juan/Backend-Backups-Utility-Neo4j/src/resources/wordboxdev-credentials-storage.json
          
  - [ ] Download the python program on your server and install dependencies with the following command 
  
