@@ -1,0 +1,3 @@
+urlbackup: /home/juan/backups
+bucketname: backups
+pathcreadentialsgcp: /home/juan/backups/credentials.json

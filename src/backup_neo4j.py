@@ -2,11 +2,14 @@ import os
 import datetime
 import zipfile
 import sys
+import yaml
 from google.cloud import storage
 
 
-URL_BACKUP = 'URL_BACKUP'  # '/home/juan/backups/'
-BUCKET_NAME = 'BUCKET_NAME'  # 'backups-wordbox'
+URL_BACKUP = 'urlbackup'  # '/home/juan/backups/'
+BUCKET_NAME = 'bucketname'  # 'backups-wordbox'
+# '/home/juan/Backend-Backups-Utility-Neo4j/src/resources/wordboxdev-credentials-storage.json'
+URL_GCP_CREDENTIALS = 'pathcreadentialsgcp'
 NAME_DIRECTORY = 'neo4j_backup'
 NAME_FILE_ZIP = 'neo4j_backup.zip'
 FROM_SERVER = 'localhost:6362'
@@ -14,32 +17,33 @@ BACKUP_CMD = 'sudo neo4j-admin backup --backup-dir={} --from={} --name={}'
 FORMAT_DATE = '%m-%d-%Y_%H-%M-%S'
 MESSAGE_UPLOAD_FILE = 'File {} uploaded to {}.'
 ENVIRONMENT_VARIABLE_GCP = 'GOOGLE_APPLICATION_CREDENTIALS'
-# '/home/juan/Backend-Backups-Utility-Neo4j/src/resources/wordboxdev-credentials-storage.json'
-URL_GCP_CREDENTIALS = 'URL_GCP_CREDENTIALS'
 
 
-def validate_environment_variables():
+def validate_environment_variables(args):
     try:
-        global url_backup
-        url_backup = os.environ[URL_BACKUP]
+        with open(args[1]) as file:
+            config_list = yaml.load(file, Loader=yaml.FullLoader)
 
-        if(not url_backup):
-            print('The environment variable URL_BACKUP doesnt exist')
-            return False
+            global url_backup
+            url_backup = config_list[URL_BACKUP]
+        
+            if(not url_backup):
+                print('The config variable urlbackup doesnt exist')
+                return False
 
-        global bucket_name
-        bucket_name = os.environ[BUCKET_NAME]
+            global bucket_name
+            bucket_name = config_list[BUCKET_NAME]
 
-        if(not bucket_name):
-            print('The environment variable BUCKET_NAME doesnt exist')
-            return False
+            if(not bucket_name):
+                print('The config variable bucketname doesnt exist')
+                return False
 
-        global path_credentials_gcp
-        path_credentials_gcp = os.environ[URL_GCP_CREDENTIALS]
+            global path_credentials_gcp
+            path_credentials_gcp = config_list[URL_GCP_CREDENTIALS]
 
-        if(not path_credentials_gcp):
-            print('The environment variable URL_GCP_CREDENTIALS doesnt exist')
-            return False
+            if(not path_credentials_gcp):
+                print('The config variable pathcreadentialsgcp doesnt exist')
+                return False
     except:
         print("Unexpected error:", sys.exc_info()[0])
         raise
@@ -87,7 +91,11 @@ def remove_zip_file():
 
 
 def create_backup():
-    if(validate_environment_variables()):
+    if(len(sys.argv) < 2):
+        print('The arguments are invalid')
+        return
+    
+    if(validate_environment_variables(sys.argv)):
         execute_command_backup()
         zip_directory(url_backup + NAME_DIRECTORY)
         upload_backup_file(url_backup_file_zip)

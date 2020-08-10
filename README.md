@@ -7,27 +7,22 @@ Neo4j utility python program for backing up neo4j databases during the online pe
 
         https://realpython.com/installing-python/
         https://linuxize.com/post/how-to-install-pip-on-ubuntu-18.04/
-
-- [ ] Create the environment variables permanently, and system wide (all users, all processes) add set variable in /etc/environment
- 
-        sudo -H vi /etc/environment
-
- - [ ] Add a named environment variable to the /etc/environment file, with name URL_BACKUP then its value is the path of the disk where you want to save the backup.
- 
-        URL_BACKUP="/home/juan/backups/"
-            
- - [ ] Add a named environment variable to the /etc/environment file, with name BUCKET_NAME then its value is the name of storage in GCP.
- 
-        BUCKET_NAME="backups-wordbox"
-         
- - [ ] Add a named environment variable to the /etc/environment file, with name ENVIRONMENT_VARIABLE_VALUE_GCP then its value is the path of GCP credentials.
- 
-        URL_GCP_CREDENTIALS="/home/juan/Backend-Backups-Utility-Neo4j/src/resources/wordboxdev-credentials-storage.json"
          
  - [ ] Download the python program on your server and install dependencies with the following command 
+
+	```
+	sudo -H pip3 install pyyaml
+	sudo -H pip3 install -U PyYAML
+	sudo -H pip3 install google-cloud-storage
+	```
+
+ - [ ] Modify the yaml file. Contains important parameters for the correct job.
  
-		pip3 install google-cloud-storage
-        
+	```
+	urlbackup: /home/juan/backups
+	bucketname: backups --> [The bucket in GCP]
+	pathcreadentialsgcp: /home/juan/backups/credentials.json
+	```
         
  - [ ] Install cron package for linux with the following commands
         
@@ -41,5 +36,5 @@ Neo4j utility python program for backing up neo4j databases during the online pe
          
  - [ ] Schedule the script via cron, in this example full backup is done every day at 5 am
 
-        0 5 * * * /usr/bin/python3 /home/juan/backups_program/backup_neo4j.py > /backups/logbackup.log 2>&1
+        0 */24 * * * /usr/bin/python3 /home/juan/backups_program/backup_neo4j.py /home/juan/backups_program/config.yaml >> /home/juan/backups_program/logbackups.log 2>&1
       
