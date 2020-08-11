@@ -14,6 +14,7 @@ Neo4j utility python program for backing up neo4j databases during the online pe
 	sudo -H pip3 install pyyaml
 	sudo -H pip3 install -U PyYAML
 	sudo -H pip3 install google-cloud-storage
+	sudo -H pip3 install -Iv cryptography==1.4.0
 	```
 
  - [ ] Modify the yaml file. Contains important parameters for the correct job.
