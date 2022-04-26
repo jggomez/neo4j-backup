@@ -39,3 +39,8 @@ Neo4j utility python program for backing up neo4j databases during the online pe
 
         0 */24 * * * /usr/bin/python3 /home/juan/backups_program/backup_neo4j.py /home/juan/backups_program/config.yaml >> /home/juan/backups_program/logbackups.log 2>&1
       
+Made with ❤ by  [jggomez](https://devhack.co).
+
+[![Twitter Badge](https://img.shields.io/badge/-@jggomezt-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/jggomezt)](https://twitter.com/jggomezt)
+[![Linkedin Badge](https://img.shields.io/badge/-jggomezt-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/jggomezt/)](https://www.linkedin.com/in/jggomezt/)
+[![Medium Badge](https://img.shields.io/badge/-@jggomezt-03a57a?style=flat-square&labelColor=000000&logo=Medium&link=https://medium.com/@jggomezt)](https://medium.com/@jggomezt)
